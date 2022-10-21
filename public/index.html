@@ -8,6 +8,8 @@
     <script src="/scripts/user.js"></script>
     <script src="/scripts/channel.js"></script>
     <script src="/scripts/connection.js"></script>
+    <script src="/scripts/follow.js"></script>
+    <script src="/scripts/subscriber.js"></script>
     <script src="/scripts/index.js"></script>
   </head>
 
@@ -231,6 +233,47 @@
               <input id="id" name="id" />
             </div>
             <input type="submit" value="Delete Connection" />
+          </form>
+          <!-- ⭐️ FOLLOWER -->
+          <form id="view-all-follows">
+            <h3>View All Follows</h3>
+            <input type="submit" value="View All Follows" />
+          </form>
+
+          <form id="view-follows-by-author">
+            <h3>View Follows By Author</h3>
+            <div>
+              <label for="author">Author:</label>
+              <input id="author" name="author" />
+            </div>
+            <input type="submit" value="View Follows By Author" />
+          </form>
+
+          <form id="view-follows-by-channel">
+            <h3>View Follows By Channel</h3>
+            <div>
+              <label for="channel">Channel:</label>
+              <input id="channel" name="channel" />
+            </div>
+            <input type="submit" value="View Follows By Channel" />
+          </form>
+
+          <form id="create-follow">
+            <h3>Create Follow</h3>
+            <div>
+              <label for="channelId">Channel:</label>
+              <textarea id="channelId" name="channelId"></textarea>
+            </div>
+            <input type="submit" value="Create Follow" />
+          </form>
+
+          <form id="delete-follow">
+            <h3>Delete Follow</h3>
+            <div>
+              <label for="id">ID:</label>
+              <input id="id" name="id" />
+            </div>
+            <input type="submit" value="Delete Follow" />
           </form>
         </div>
       </section>

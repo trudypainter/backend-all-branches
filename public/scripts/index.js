@@ -34,22 +34,31 @@ const formsAndHandlers = {
   "change-password": changePassword,
   "sign-in": signIn,
   "sign-out": signOut,
+
   "view-all-freets": viewAllFreets,
   "view-freets-by-author": viewFreetsByAuthor,
   "create-freet": createFreet,
   "edit-freet": editFreet,
   "delete-freet": deleteFreet,
+
   "create-channel": createChannel,
   "edit-channel": editChannel,
   "delete-channel": deleteChannel,
   "view-all-channels": viewAllChannels,
   "view-channels-by-author": viewChannelsByAuthor,
+
   "create-connection": createConnection,
   "delete-connection": deleteConnection,
   "view-all-connections": viewAllConnections,
   "view-connections-by-author": viewConnectionsByAuthor,
   "view-connections-by-channel": viewConnectionsByChannel,
   "view-connections-by-freet": viewConnectionsByFreet,
+
+  "create-follow": createFollow,
+  "delete-follow": deleteFollow,
+  "view-all-follows": viewAllFollows,
+  "view-follows-by-author": viewFollowsByAuthor,
+  "view-follows-by-channel": viewFollowsByChannel,
 };
 
 // Attach handlers to forms
