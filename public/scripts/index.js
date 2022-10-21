@@ -44,6 +44,12 @@ const formsAndHandlers = {
   "delete-channel": deleteChannel,
   "view-all-channels": viewAllChannels,
   "view-channels-by-author": viewChannelsByAuthor,
+  "create-connection": createConnection,
+  "delete-connection": deleteConnection,
+  "view-all-connections": viewAllConnections,
+  "view-connections-by-author": viewConnectionsByAuthor,
+  "view-connections-by-channel": viewConnectionsByChannel,
+  "view-connections-by-freet": viewConnectionsByFreet,
 };
 
 // Attach handlers to forms

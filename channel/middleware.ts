@@ -27,6 +27,29 @@ const isChannelExists = async (
 };
 
 /**
+ * Checks if a channel with channel in req.body exists
+ */
+const isChannelInBodyExists = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { channelId } = req.body as { channelId: string };
+  const validFormat = Types.ObjectId.isValid(channelId);
+  const channel = validFormat ? await ChannelCollection.findOne(channelId) : "";
+  if (!channel) {
+    res.status(404).json({
+      error: {
+        channelNotFound: `Channel with channel ID ${channelId} does not exist.`,
+      },
+    });
+    return;
+  }
+
+  next();
+};
+
+/**
  * Checks if the title of the Channel in req.body is valid, i.e not a stream of empty
  * spaces and not more than 140 characters
  */
@@ -73,4 +96,9 @@ const isValidChannelModifier = async (
   next();
 };
 
-export { isValidChannelTitle, isChannelExists, isValidChannelModifier };
+export {
+  isChannelInBodyExists,
+  isValidChannelTitle,
+  isChannelExists,
+  isValidChannelModifier,
+};

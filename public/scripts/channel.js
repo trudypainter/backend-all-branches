@@ -4,22 +4,21 @@
  * Fields is an object mapping the names of the form inputs to the values typed in
  * e.g. for createUser, fields has properites 'username' and 'password'
  */
-console.log("thsi got importeds");
 
 function viewAllChannels(fields) {
-  console.log("viewings all channels...");
+  console.log("viewings all channelss...");
 
-  fetch("/api/channel").then(showResponse).catch(showResponse);
+  fetch("/api/channels").then(showResponse).catch(showResponse);
 }
 
 function viewChannelsByAuthor(fields) {
-  fetch(`/api/channel?author=${fields.author}`)
+  fetch(`/api/channels?author=${fields.author}`)
     .then(showResponse)
     .catch(showResponse);
 }
 
 function createChannel(fields) {
-  fetch("/api/channel", {
+  fetch("/api/channels", {
     method: "POST",
     body: JSON.stringify(fields),
     headers: { "Content-Type": "application/json" },
@@ -29,7 +28,7 @@ function createChannel(fields) {
 }
 
 function editChannel(fields) {
-  fetch(`/api/channel/${fields.id}`, {
+  fetch(`/api/channels/${fields.id}`, {
     method: "PUT",
     body: JSON.stringify(fields),
     headers: { "Content-Type": "application/json" },
@@ -39,7 +38,7 @@ function editChannel(fields) {
 }
 
 function deleteChannel(fields) {
-  fetch(`/api/channel/${fields.id}`, { method: "DELETE" })
+  fetch(`/api/channels/${fields.id}`, { method: "DELETE" })
     .then(showResponse)
     .catch(showResponse);
 }

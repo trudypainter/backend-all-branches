@@ -7,6 +7,7 @@
     <script src="/scripts/freet.js"></script>
     <script src="/scripts/user.js"></script>
     <script src="/scripts/channel.js"></script>
+    <script src="/scripts/connection.js"></script>
     <script src="/scripts/index.js"></script>
   </head>
 
@@ -19,6 +20,8 @@
       <section id="operations-container">
         <h2>Operations:</h2>
         <div class="scrollbox">
+          <!-- ⭐️ USER -->
+
           <form id="create-user">
             <h3>Create User</h3>
             <div>
@@ -73,6 +76,8 @@
             <input type="submit" value="Sign out" />
           </form>
 
+          <!-- ⭐️ FREETS -->
+
           <form id="view-all-freets">
             <h3>View All Freets</h3>
             <input type="submit" value="View All Freets" />
@@ -117,6 +122,8 @@
             </div>
             <input type="submit" value="Delete Freet" />
           </form>
+
+          <!-- ⭐️ CHANNELS -->
 
           <form id="view-all-channels">
             <h3>View All Channels</h3>
@@ -169,6 +176,61 @@
               <input id="id" name="id" />
             </div>
             <input type="submit" value="Delete Channel" />
+          </form>
+
+          <!-- ⭐️ CONNECTION -->
+          <form id="view-all-connections">
+            <h3>View All Connections</h3>
+            <input type="submit" value="View All Connections" />
+          </form>
+
+          <form id="view-connections-by-author">
+            <h3>View Connections By Author</h3>
+            <div>
+              <label for="author">Author:</label>
+              <input id="author" name="author" />
+            </div>
+            <input type="submit" value="View Connections By Author" />
+          </form>
+
+          <form id="view-connections-by-channel">
+            <h3>View Connections By Channel</h3>
+            <div>
+              <label for="channel">Channel:</label>
+              <input id="channel" name="channel" />
+            </div>
+            <input type="submit" value="View Connections By Channel" />
+          </form>
+
+          <form id="view-connections-by-freet">
+            <h3>View Connections By Freet</h3>
+            <div>
+              <label for="freet">Freet:</label>
+              <input id="freet" name="freet" />
+            </div>
+            <input type="submit" value="View Connections for Freet" />
+          </form>
+
+          <form id="create-connection">
+            <h3>Create Connection</h3>
+            <div>
+              <label for="freetId">Freet:</label>
+              <textarea id="freetId" name="freetId"></textarea>
+            </div>
+            <div>
+              <label for="channelId">Channel:</label>
+              <textarea id="channelId" name="channelId"></textarea>
+            </div>
+            <input type="submit" value="Create Connection" />
+          </form>
+
+          <form id="delete-connection">
+            <h3>Delete Connection</h3>
+            <div>
+              <label for="id">ID:</label>
+              <input id="id" name="id" />
+            </div>
+            <input type="submit" value="Delete Connection" />
           </form>
         </div>
       </section>
