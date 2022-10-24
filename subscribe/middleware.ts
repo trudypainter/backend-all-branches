@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { Types } from "mongoose";
+import UserCollection from "../user/collection";
 import SubscribeCollection from "../subscribe/collection";
 import SubscribeModel, { Subscribe } from "./model";
 
@@ -55,19 +56,29 @@ const isNotDuplicateSubscribe = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("session user id", req.session.userId);
   const AuthorSubscribes = await SubscribeCollection.findAllByAuthorId(
     req.session.userId
   );
+  const reqBodySubscribingTo = await UserCollection.findOneByUsername(
+    req.body.subscribingTo.toString()
+  );
 
   if (
-    AuthorSubscribes.some(
-      (elm) =>
-        elm.subscribingToId.toString() === req.body.subscribingTo.toString()
-    )
+    AuthorSubscribes.some((elm) => {
+      console.log(
+        "⭐️",
+        elm.subscribingToId._id.toString(),
+        reqBodySubscribingTo._id.toString()
+      );
+
+      return (
+        elm.subscribingToId._id.toString() ===
+        reqBodySubscribingTo._id.toString()
+      );
+    })
   ) {
     res.status(403).json({
-      error: "Already subscribeing this user.",
+      error: "Already subscribing to this user.",
     });
     return;
   }
