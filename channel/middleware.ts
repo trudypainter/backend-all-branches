@@ -34,6 +34,8 @@ const isChannelInQueryExists = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log("validator looking for ", req.query.channelId);
+
   const validFormat = Types.ObjectId.isValid(req.query.channelId.toString());
   const Channel = validFormat
     ? await ChannelCollection.findOne(req.query.channelId.toString())

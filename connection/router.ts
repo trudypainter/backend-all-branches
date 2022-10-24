@@ -74,9 +74,11 @@ router.get(
       next("route");
       return;
     }
+    next();
   },
   [ChannelValidator.isChannelInQueryExists],
   async (req: Request, res: Response) => {
+    console.log("looking for ", req.query.channelId.toString());
     const channelConnections = await ConnectionCollection.findAllByChannelId(
       req.query.channelId.toString()
     );
@@ -98,23 +100,13 @@ router.get(
 
 router.get(
   "/",
-  [FreetValidator.isFreetExists],
+  [FreetValidator.isFreetInQueryExists],
   async (req: Request, res: Response, next: NextFunction) => {
-    // Check if freetId query parameter was supplied
-    if (req.query.freet !== undefined) {
-      next();
-      return;
-    }
-    const allConnections = await ConnectionCollection.findAll();
-    const response = allConnections.map(util.constructConnectionResponse);
-    res.status(200).json(response);
-  },
-  [userValidator.isAuthorExists],
-  async (req: Request, res: Response) => {
-    const freetConnections = await ConnectionCollection.findAllByUsername(
-      req.query.freet as string
+    console.log("looking for freet ", req.query.freetId.toString());
+    const channelConnections = await ConnectionCollection.findAllByFreetId(
+      req.query.freetId.toString()
     );
-    const response = freetConnections.map(util.constructConnectionResponse);
+    const response = channelConnections.map(util.constructConnectionResponse);
     res.status(200).json(response);
   }
 );

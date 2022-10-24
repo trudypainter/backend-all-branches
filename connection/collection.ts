@@ -2,6 +2,8 @@ import type { HydratedDocument, Types } from "mongoose";
 import type { Connection } from "./model";
 import ConnectionModel from "./model";
 import UserCollection from "../user/collection";
+import ChannelCollection from "../channel/collection";
+import FreetCollection from "../freet/collection";
 
 /**
  * This files contains a class that has the functionality to explore Connections
@@ -82,11 +84,37 @@ class ConnectionCollection {
       .populate("freetId");
   }
 
+  /**
+   * Get all the Connections in a given channel
+   *
+   * @param {string} channelId - The id of the channel
+   * @return {Promise<HydratedDocument<Connection>[]>} - An array of all of the Connections
+   */
   static async findAllByChannelId(
     channelId: string
   ): Promise<Array<HydratedDocument<Connection>>> {
+    const channel = await ChannelCollection.findOne(channelId);
     return ConnectionModel.find({
-      channel: { _id: channelId },
+      channelId: channel._id,
+    })
+      .populate("authorId")
+      .populate("channelId")
+      .populate("freetId");
+  }
+
+  /**
+   * Get all the Connections for a given freet
+   *
+   * @param {string} freetId - The id of the freet
+   * @return {Promise<HydratedDocument<Connection>[]>} - An array of all of the Connections
+   */
+  static async findAllByFreetId(
+    freetId: string
+  ): Promise<Array<HydratedDocument<Connection>>> {
+    const freet = await FreetCollection.findOne(freetId);
+    console.log("at conneciton for freet", freet);
+    return ConnectionModel.find({
+      freetId: freet._id,
     })
       .populate("authorId")
       .populate("channelId")
