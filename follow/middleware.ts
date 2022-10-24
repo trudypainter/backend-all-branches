@@ -12,14 +12,14 @@ const isFollowExists = async (
   res: Response,
   next: NextFunction
 ) => {
-  const validFormat = Types.ObjectId.isValid(req.params.FollowId);
+  const validFormat = Types.ObjectId.isValid(req.params.followId);
   const Follow = validFormat
-    ? await FollowCollection.findOne(req.params.FollowId)
+    ? await FollowCollection.findOne(req.params.followId)
     : "";
   if (!Follow) {
     res.status(404).json({
       error: {
-        FollowNotFound: `Follow with Follow ID ${req.params.FollowId} does not exist.`,
+        FollowNotFound: `Follow with Follow ID ${req.params.followId} does not exist.`,
       },
     });
     return;
@@ -63,7 +63,7 @@ const isFollowAuthor = async (
   res: Response,
   next: NextFunction
 ) => {
-  const Follow = await FollowCollection.findOne(req.params.FollowId);
+  const Follow = await FollowCollection.findOne(req.params.followId);
   const followuthorId = Follow.authorId._id;
   if (req.session.userId !== followuthorId.toString()) {
     res.status(403).json({

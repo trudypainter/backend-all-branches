@@ -30,6 +30,11 @@ router.get(
   "/",
   async (req: Request, res: Response, next: NextFunction) => {
     // Check if authorId query parameter was supplied
+    if (req.query.channelId !== undefined) {
+      next("route");
+      return;
+    }
+
     if (req.query.author !== undefined) {
       next();
       return;
@@ -70,21 +75,10 @@ router.get(
 
 router.get(
   "/",
-  [ChannelValidator.isChannelExists],
-  async (req: Request, res: Response, next: NextFunction) => {
-    // Check if channelId query parameter was supplied
-    if (req.query.channel !== undefined) {
-      next();
-      return;
-    }
-    const allFollows = await FollowCollection.findAll();
-    const response = allFollows.map(util.constructFollowResponse);
-    res.status(200).json(response);
-  },
-  [userValidator.isAuthorExists],
+  [ChannelValidator.isChannelInQueryExists],
   async (req: Request, res: Response) => {
-    const channelFollows = await FollowCollection.findAllByUsername(
-      req.query.channel as string
+    const channelFollows = await FollowCollection.findAllByChannelId(
+      req.query.channelId.toString()
     );
     const response = channelFollows.map(util.constructFollowResponse);
     res.status(200).json(response);
@@ -140,47 +134,11 @@ router.delete(
     FollowValidator.isFollowAuthor,
   ],
   async (req: Request, res: Response) => {
-    await FollowCollection.deleteOne(req.params.FollowId);
+    await FollowCollection.deleteOne(req.params.followId);
     res.status(200).json({
       message: "Your Follow was deleted successfully.",
     });
   }
 );
-
-// /**
-//  * Modify a Follow
-// ⭐️ CONNECTIONS ARE IMMUTABLE
-//  *
-//  * @name PUT /api/Follows/:id
-//  *
-//  * @param {string} title - the new title for the Follow
-//  * @param {string} description - the new description for the Follow
-//  * @return {FollowResponse} - the updated Follow
-//  * @throws {403} - if the user is not logged in or not the author of
-//  *                 of the Follow
-//  * @throws {404} - If the FollowId is not valid
-//  * @throws {400} - If the Follow title is empty or a stream of empty spaces
-//  * @throws {413} - If the Follow title is more than 140 characters long
-//  */
-// router.put(
-//   "/:followId?",
-//   [
-//     userValidator.isUserLoggedIn,
-//     FollowValidator.isFollowExists,
-//     FollowValidator.isValidFollowModifier,
-//     FollowValidator.isValidFollowTitle,
-//   ],
-//   async (req: Request, res: Response) => {
-//     const Follow = await FollowCollection.updateOne(
-//       req.params.followId,
-//       req.body.title,
-//       req.body.description
-//     );
-//     res.status(200).json({
-//       message: "Your Follow was updated successfully.",
-//       Follow: util.constructFollowResponse(Follow),
-//     });
-//   }
-// );
 
 export { router as FollowRouter };

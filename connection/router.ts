@@ -102,7 +102,6 @@ router.get(
   "/",
   [FreetValidator.isFreetInQueryExists],
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log("looking for freet ", req.query.freetId.toString());
     const channelConnections = await ConnectionCollection.findAllByFreetId(
       req.query.freetId.toString()
     );

@@ -71,10 +71,24 @@ class FollowCollection {
   static async findAllByUsername(
     username: string
   ): Promise<Array<HydratedDocument<Follow>>> {
-    console.log("looking for ...", username);
     const author = await UserCollection.findOneByUsername(username);
-    console.log(author);
     return FollowModel.find({ authorId: author._id })
+      .populate("authorId")
+      .populate("channelId");
+  }
+
+  /**
+   * Get all the Follows for a given channel
+   *
+   * @param {string} channelId - The channel to get follows for
+   * @return {Promise<HydratedDocument<Follow>[]>} - An array of all of the Follows
+   */
+  static async findAllByChannelId(
+    channelId: string
+  ): Promise<Array<HydratedDocument<Follow>>> {
+    console.log("follow collection looking for channel id", channelId);
+    const channel = await ChannelCollection.findOne(channelId);
+    return FollowModel.find({ channelId: channel._id })
       .populate("authorId")
       .populate("channelId");
   }
@@ -82,7 +96,7 @@ class FollowCollection {
   /**
    * Get all the Follows in by given author
    *
-   * @param {string} username - The username of author of the Follows
+   * @param {string} userId - The username of author of the Follows
    * @return {Promise<HydratedDocument<Follow>[]>} - An array of all of the Follows
    */
   static async findAllByUserId(
@@ -115,28 +129,6 @@ class FollowCollection {
       .populate("authorId")
       .populate("channelId");
   }
-
-  // /**
-  // ⭐️ CONNECTIONS ARE IMMUTABLE
-  //  * Update a Follow with the new title + description
-  //  *
-  //  * @param {string} FollowId - The id of the Follow to be updated
-  //  * @param {string} title - The new title of the Follow
-  //  * @param {string} description - The new description of the Follow
-  //  * @return {Promise<HydratedDocument<Follow>>} - The newly updated Follow
-  //  */
-  // static async updateOne(
-  //   FollowId: Types.ObjectId | string,
-  //   title: string,
-  //   description: string
-  // ): Promise<HydratedDocument<Follow>> {
-  //   const Follow = await FollowModel.findOne({ _id: FollowId });
-  //   Follow.title = title;
-  //   Follow.description = description;
-  //   Follow.dateModified = new Date();
-  //   await Follow.save();
-  //   return Follow.populate("authorId");
-  // }
 
   /**
    * Delete a Follow with given FollowId.

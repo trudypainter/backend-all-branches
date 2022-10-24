@@ -16,7 +16,7 @@ function viewFollowsByAuthor(fields) {
 }
 
 function viewFollowsByChannel(fields) {
-  fetch(`/api/follows?channel=${fields.channel}`)
+  fetch(`/api/follows?channelId=${fields.channelId}`)
     .then(showResponse)
     .catch(showResponse);
 }
