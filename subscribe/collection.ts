@@ -88,9 +88,7 @@ class SubscribeCollection {
   static async findAllBySubscribingToId(
     username: string
   ): Promise<Array<HydratedDocument<Subscribe>>> {
-    console.log(username);
     const subcribingTo = await UserCollection.findOneByUsername(username);
-    console.log(subcribingTo);
 
     return SubscribeModel.find({
       subscribingToId: subcribingTo._id,

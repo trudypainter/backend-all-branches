@@ -30,7 +30,13 @@ const router = express.Router();
 router.get(
   "/",
   async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.query);
     // Check if authorId query parameter was supplied
+    if (req.query.channelId !== undefined || req.query.freetId !== undefined) {
+      next("route");
+      return;
+    }
+
     if (req.query.author !== undefined) {
       next();
       return;
@@ -51,14 +57,6 @@ router.get(
 );
 
 /**
- * Get the connection metadata
- *
- * @name GET /api/connection
- *
- * @return {ConnectionResponse[]} - A list of all the Connections sorted in descending
- *                      order by date modified
- */
-/**
  * Get Connections in channel.
  *
  * @name GET /api/Connections?channelId=id
@@ -68,38 +66,25 @@ router.get(
  * @throws {404} - If no user has given channelId
  *
  */
-
 router.get(
   "/",
-  [ChannelValidator.isChannelExists],
   async (req: Request, res: Response, next: NextFunction) => {
     // Check if channelId query parameter was supplied
-    if (req.query.channel !== undefined) {
-      next();
+    if (req.query.freetId !== undefined) {
+      next("route");
       return;
     }
-    const allConnections = await ConnectionCollection.findAll();
-    const response = allConnections.map(util.constructConnectionResponse);
-    res.status(200).json(response);
   },
-  [userValidator.isAuthorExists],
+  [ChannelValidator.isChannelInQueryExists],
   async (req: Request, res: Response) => {
-    const channelConnections = await ConnectionCollection.findAllByUsername(
-      req.query.channel as string
+    const channelConnections = await ConnectionCollection.findAllByChannelId(
+      req.query.channelId.toString()
     );
     const response = channelConnections.map(util.constructConnectionResponse);
     res.status(200).json(response);
   }
 );
 
-/**
- * Get the connection metadata
- *
- * @name GET /api/connection
- *
- * @return {ConnectionResponse[]} - A list of all the Connections sorted in descending
- *                      order by date modified
- */
 /**
  * Get Connections for freet.
  *
@@ -188,7 +173,8 @@ router.delete(
     ConnectionValidator.isConnectionAuthor,
   ],
   async (req: Request, res: Response) => {
-    await ConnectionCollection.deleteOne(req.params.ConnectionId);
+    console.log(req.params.connectionId);
+    await ConnectionCollection.deleteOne(req.params.connectionId);
     res.status(200).json({
       message: "Your Connection was deleted successfully.",
     });

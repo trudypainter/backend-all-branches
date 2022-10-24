@@ -11,14 +11,14 @@ const isConnectionExists = async (
   res: Response,
   next: NextFunction
 ) => {
-  const validFormat = Types.ObjectId.isValid(req.params.ConnectionId);
+  const validFormat = Types.ObjectId.isValid(req.params.connectionId);
   const Connection = validFormat
-    ? await ConnectionCollection.findOne(req.params.ConnectionId)
+    ? await ConnectionCollection.findOne(req.params.connectionId)
     : "";
   if (!Connection) {
     res.status(404).json({
       error: {
-        ConnectionNotFound: `Connection with Connection ID ${req.params.ConnectionId} does not exist.`,
+        ConnectionNotFound: `Connection with Connection ID ${req.params.connectionId} does not exist.`,
       },
     });
     return;
@@ -62,10 +62,13 @@ const isConnectionAuthor = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log(req.params);
   const Connection = await ConnectionCollection.findOne(
-    req.params.ConnectionId
+    req.params.connectionId
   );
+  console.log(Connection);
   const connectionuthorId = Connection.authorId._id;
+  console.log(connectionuthorId);
   if (req.session.userId !== connectionuthorId.toString()) {
     res.status(403).json({
       error: "Cannot delete other user's connections.",

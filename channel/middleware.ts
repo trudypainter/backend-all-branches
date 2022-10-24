@@ -27,6 +27,30 @@ const isChannelExists = async (
 };
 
 /**
+ * Checks if a Channel with ChannelId is req.query exists
+ */
+const isChannelInQueryExists = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const validFormat = Types.ObjectId.isValid(req.query.channelId.toString());
+  const Channel = validFormat
+    ? await ChannelCollection.findOne(req.query.channelId.toString())
+    : "";
+  if (!Channel) {
+    res.status(404).json({
+      error: {
+        ChannelNotFound: `Channel with Channel ID ${req.params.channelId} does not exist.`,
+      },
+    });
+    return;
+  }
+
+  next();
+};
+
+/**
  * Checks if a channel with channel in req.body exists
  */
 const isChannelInBodyExists = async (
@@ -86,7 +110,11 @@ const isValidChannelModifier = async (
 ) => {
   const Channel = await ChannelCollection.findOne(req.params.channelId);
   const userId = Channel.authorId._id;
-  if (req.session.userId !== userId.toString()) {
+
+  console.log(Channel);
+  console.log(userId);
+  console.log(req.session.userId.toString());
+  if (req.session.userId.toString() !== userId.toString()) {
     res.status(403).json({
       error: "Cannot modify other users' Channels.",
     });
@@ -101,4 +129,5 @@ export {
   isValidChannelTitle,
   isChannelExists,
   isValidChannelModifier,
+  isChannelInQueryExists,
 };

@@ -97,7 +97,8 @@ router.delete(
     ChannelValidator.isValidChannelModifier,
   ],
   async (req: Request, res: Response) => {
-    await ChannelCollection.deleteOne(req.params.ChannelId);
+    console.log("req params", req.params.channelId);
+    await ChannelCollection.deleteOne(req.params.channelId);
     res.status(200).json({
       message: "Your Channel was deleted successfully.",
     });

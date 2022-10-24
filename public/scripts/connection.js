@@ -16,13 +16,13 @@ function viewConnectionsByAuthor(fields) {
 }
 
 function viewConnectionsByChannel(fields) {
-  fetch(`/api/connections?channel=${fields.channel}`)
+  fetch(`/api/connections?channelId=${fields.channelId}`)
     .then(showResponse)
     .catch(showResponse);
 }
 
 function viewConnectionsByFreet(fields) {
-  fetch(`/api/connections?freet=${fields.freet}`)
+  fetch(`/api/connections?freetId=${fields.freetId}`)
     .then(showResponse)
     .catch(showResponse);
 }

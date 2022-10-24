@@ -82,27 +82,16 @@ class ConnectionCollection {
       .populate("freetId");
   }
 
-  // /**
-  // ⭐️ CONNECTIONS ARE IMMUTABLE
-  //  * Update a Connection with the new title + description
-  //  *
-  //  * @param {string} ConnectionId - The id of the Connection to be updated
-  //  * @param {string} title - The new title of the Connection
-  //  * @param {string} description - The new description of the Connection
-  //  * @return {Promise<HydratedDocument<Connection>>} - The newly updated Connection
-  //  */
-  // static async updateOne(
-  //   ConnectionId: Types.ObjectId | string,
-  //   title: string,
-  //   description: string
-  // ): Promise<HydratedDocument<Connection>> {
-  //   const Connection = await ConnectionModel.findOne({ _id: ConnectionId });
-  //   Connection.title = title;
-  //   Connection.description = description;
-  //   Connection.dateModified = new Date();
-  //   await Connection.save();
-  //   return Connection.populate("authorId");
-  // }
+  static async findAllByChannelId(
+    channelId: string
+  ): Promise<Array<HydratedDocument<Connection>>> {
+    return ConnectionModel.find({
+      channel: { _id: channelId },
+    })
+      .populate("authorId")
+      .populate("channelId")
+      .populate("freetId");
+  }
 
   /**
    * Delete a Connection with given ConnectionId.
@@ -111,9 +100,10 @@ class ConnectionCollection {
    * @return {Promise<Boolean>} - true if the Connection has been deleted, false otherwise
    */
   static async deleteOne(
-    ConnectionId: Types.ObjectId | string
+    connectionId: Types.ObjectId | string
   ): Promise<boolean> {
-    const Connection = await ConnectionModel.deleteOne({ _id: ConnectionId });
+    const Connection = await ConnectionModel.deleteOne({ _id: connectionId });
+    console.log("connection deleted", Connection);
     return Connection !== null;
   }
 

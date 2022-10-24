@@ -102,7 +102,9 @@ class ChannelCollection {
    * @return {Promise<Boolean>} - true if the Channel has been deleted, false otherwise
    */
   static async deleteOne(ChannelId: Types.ObjectId | string): Promise<boolean> {
-    const Channel = await ChannelModel.deleteOne({ _id: ChannelId });
+    console.log("channle id passed: ", ChannelId);
+    const Channel = await ChannelModel.deleteOne({ _id: ChannelId.toString() });
+    console.log("channel response, ", Channel);
     return Channel !== null;
   }
 
