@@ -9,7 +9,7 @@
     <script src="/scripts/channel.js"></script>
     <script src="/scripts/connection.js"></script>
     <script src="/scripts/follow.js"></script>
-    <script src="/scripts/subscriber.js"></script>
+    <script src="/scripts/subscribe.js"></script>
     <script src="/scripts/index.js"></script>
   </head>
 
@@ -234,7 +234,8 @@
             </div>
             <input type="submit" value="Delete Connection" />
           </form>
-          <!-- ⭐️ FOLLOWER -->
+
+          <!-- ⭐️ FOLLOW -->
           <form id="view-all-follows">
             <h3>View All Follows</h3>
             <input type="submit" value="View All Follows" />
@@ -274,6 +275,49 @@
               <input id="id" name="id" />
             </div>
             <input type="submit" value="Delete Follow" />
+          </form>
+
+          <!-- ⭐️ SUBSCRIBE -->
+          <form id="view-all-subscribes">
+            <h3>View All Subscribes</h3>
+            <input type="submit" value="View All Subscribes" />
+          </form>
+
+          <form id="view-subscribes-by-author">
+            <h3>View Subscribes By Author</h3>
+            <div>
+              <label for="author">Author:</label>
+              <input id="author" name="author" />
+            </div>
+            <input type="submit" value="View Subscribes By Author" />
+          </form>
+
+          <form id="view-subscribes-by-subscribing-to">
+            <h3>View Subscribes By Subscribing To</h3>
+            <p>(who is subscribing to a user)</p>
+            <div>
+              <label for="subscribingTo">subscribingTo:</label>
+              <input id="subscribingTo" name="subscribingTo" />
+            </div>
+            <input type="submit" value="View Subscribes By Subscribing To" />
+          </form>
+
+          <form id="create-subscribe">
+            <h3>Create Subscribe</h3>
+            <div>
+              <label for="subscribingTo">Subscribing To Username:</label>
+              <textarea id="subscribingTo" name="subscribingTo"></textarea>
+            </div>
+            <input type="submit" value="Create Subscribe" />
+          </form>
+
+          <form id="delete-subscribe">
+            <h3>Delete Subscribe</h3>
+            <div>
+              <label for="id">ID:</label>
+              <input id="id" name="id" />
+            </div>
+            <input type="submit" value="Delete Subscribe" />
           </form>
         </div>
       </section>

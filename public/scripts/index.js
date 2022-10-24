@@ -59,6 +59,12 @@ const formsAndHandlers = {
   "view-all-follows": viewAllFollows,
   "view-follows-by-author": viewFollowsByAuthor,
   "view-follows-by-channel": viewFollowsByChannel,
+
+  "create-subscribe": createSubscribe,
+  "delete-subscribe": deleteSubscribe,
+  "view-all-subscribes": viewAllSubscribes,
+  "view-subscribes-by-author": viewSubscribesByAuthor,
+  "view-subscribes-by-subscribing-to": viewSubscribesBySubscribingTo,
 };
 
 // Attach handlers to forms

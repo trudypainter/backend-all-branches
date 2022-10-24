@@ -5,26 +5,27 @@
  * e.g. for createUser, fields has properites 'username' and 'password'
  */
 
-function viewAllFollows(fields) {
-  fetch("/api/follows").then(showResponse).catch(showResponse);
+function viewAllSubscribes(fields) {
+  fetch("/api/subscribes").then(showResponse).catch(showResponse);
 }
 
-function viewFollowsByAuthor(fields) {
-  fetch(`/api/follows?author=${fields.author}`)
+function viewSubscribesByAuthor(fields) {
+  console.log(fields.author);
+  fetch(`/api/subscribes?author=${fields.author}`)
     .then(showResponse)
     .catch(showResponse);
 }
 
-function viewFollowsByChannel(fields) {
-  fetch(`/api/follows?channel=${fields.channel}`)
+function viewSubscribesBySubscribingTo(fields) {
+  fetch(`/api/subscribes?subscribingTo=${fields.subscribingTo}`)
     .then(showResponse)
     .catch(showResponse);
 }
 
-function createFollow(fields) {
+function createSubscribe(fields) {
   console.log(fields);
 
-  fetch("/api/follows", {
+  fetch("/api/subscribes", {
     method: "POST",
     body: JSON.stringify(fields),
     headers: { "Content-Type": "application/json" },
@@ -33,8 +34,8 @@ function createFollow(fields) {
     .catch(showResponse);
 }
 
-function deleteFollow(fields) {
-  fetch(`/api/follows/${fields.id}`, { method: "DELETE" })
+function deleteSubscribe(fields) {
+  fetch(`/api/subscribes/${fields.id}`, { method: "DELETE" })
     .then(showResponse)
     .catch(showResponse);
 }

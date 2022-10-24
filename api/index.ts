@@ -14,6 +14,7 @@ import { freetRouter } from "../freet/router";
 import { ChannelRouter } from "../channel/router";
 import { ConnectionRouter } from "../connection/router";
 import { FollowRouter } from "../follow/router";
+import { SubscribeRouter } from "../subscribe/router";
 
 // Load environmental variables
 dotenv.config({});
@@ -86,6 +87,7 @@ app.use("/api/freets", freetRouter);
 app.use("/api/channels", ChannelRouter);
 app.use("/api/connections", ConnectionRouter);
 app.use("/api/follows", FollowRouter);
+app.use("/api/subscribes", SubscribeRouter);
 
 // Catch all the other routes and display error message
 app.all("*", (req: Request, res: Response) => {
