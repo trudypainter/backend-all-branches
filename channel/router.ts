@@ -4,6 +4,8 @@ import ChannelCollection from "./collection";
 import * as userValidator from "../user/middleware";
 import * as ChannelValidator from "../Channel/middleware";
 import * as util from "./util";
+import ConnectionCollection from "../connection/collection";
+import FollowCollection from "../follow/collection";
 
 const router = express.Router();
 
@@ -98,7 +100,16 @@ router.delete(
   ],
   async (req: Request, res: Response) => {
     console.log("req params", req.params.channelId);
-    await ChannelCollection.deleteOne(req.params.channelId);
+    const chan = await ChannelCollection.deleteOne(req.params.channelId);
+    console.log("deleted channel obj", chan);
+
+    const connections = await ConnectionCollection.deleteForChannel(
+      req.params.channelId.toString()
+    );
+    console.log("deleted conenctions", connections);
+
+    await FollowCollection.deleteForChannel(req.params.channelId.toString());
+
     res.status(200).json({
       message: "Your Channel was deleted successfully.",
     });

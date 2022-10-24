@@ -143,6 +143,20 @@ class ConnectionCollection {
   static async deleteMany(authorId: Types.ObjectId | string): Promise<void> {
     await ConnectionModel.deleteMany({ authorId });
   }
+
+  /**
+   * Delete all the Connections in a given channel
+   *
+   * @param {string} channelId - The id of author of Connections
+   */
+  static async deleteForChannel(channelId: string): Promise<boolean> {
+    console.log("deleting connections for channel", channelId);
+    let connectionDeletes = await ConnectionModel.deleteMany({
+      channelId: { _id: channelId },
+    });
+    console.log("connecitons delted", connectionDeletes);
+    return connectionDeletes !== null;
+  }
 }
 
 export default ConnectionCollection;
