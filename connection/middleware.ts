@@ -78,6 +78,31 @@ const isConnectionAuthor = async (
 
   next();
 };
+/**
+ * Checks if the freet has already been connected to a given channel
+ */
+const isNotDuplicateConnection = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const freetConnections = await ConnectionCollection.findAllByFreetId(
+    req.body.freetId
+  );
+
+  if (
+    freetConnections.some(
+      (elm) => elm.channelId._id.toString() === req.body.channelId.toString()
+    )
+  ) {
+    res.status(403).json({
+      error: "Already connected freet to this channel.",
+    });
+    return;
+  }
+
+  next();
+};
 
 /**
  * Checks if the current user is the author of the Channel Connection is connecting to
@@ -106,4 +131,5 @@ export {
   isConnectionExists,
   isChannelAuthor,
   isConnectionAuthor,
+  isNotDuplicateConnection,
 };
