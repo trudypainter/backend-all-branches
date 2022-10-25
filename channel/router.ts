@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import express from "express";
 import ChannelCollection from "./collection";
 import * as userValidator from "../user/middleware";
-import * as ChannelValidator from "../Channel/middleware";
+import * as ChannelValidator from "../channel/middleware";
 import * as util from "./util";
 import ConnectionCollection from "../connection/collection";
 import FollowCollection from "../follow/collection";
