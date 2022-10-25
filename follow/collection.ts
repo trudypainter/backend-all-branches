@@ -153,10 +153,12 @@ class FollowCollection {
   /**
    * Delete all the Follows for a given channel
    *
-   * @param {string} authorId - The id of author of Connections
+   * @param {string} channelId - The id of the channel to delete follows for
    */
   static async deleteForChannel(channelId: string): Promise<void> {
-    await FollowModel.deleteMany({ channelId: channelId });
+    let followDeletes = await FollowModel.deleteMany({
+      channelId: { _id: channelId },
+    });
   }
 }
 

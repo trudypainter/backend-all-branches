@@ -4,7 +4,7 @@ Build your own not-quite-[Twitter](https://twitter.com/)!
 
 ## Starter Code
 
-  This starter code implements users (with login/sessions), and freets so that you may focus on implementing your own design ideas.
+This starter code implements users (with login/sessions), and freets so that you may focus on implementing your own design ideas.
 
 The project is structured as follows:
 
@@ -175,6 +175,8 @@ The following api routes have already been implemented for you (**Make sure to d
 
 This renders the `index.html` file that will be used to interact with the backend
 
+## ⭐️ Freets
+
 #### `GET /api/freets` - Get all the freets
 
 **Returns**
@@ -239,6 +241,8 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if the user is not the author of the freet
 - `400` if the new freet content is empty or a stream of empty spaces
 - `413` if the new freet content is more than 140 characters long
+
+## ⭐️ User
 
 #### `POST /api/users/session` - Sign in user
 
@@ -313,3 +317,250 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
+
+## ⭐️ Channels
+
+#### `GET /api/channels` - Get all the channels
+
+**Returns**
+
+- An array of all channels sorted in descending order by date modified
+
+#### `GET /api/channels?author=USERNAME` - Get channels by author
+
+**Returns**
+
+- An array of channels created by user with username `author`
+
+**Throws**
+
+- `400` if `author` is not given
+- `404` if `author` is not a recognized username of any user
+
+#### `POST /api/channels` - Create new channel
+
+**Body**
+
+- `title` _{string}_ - The channel's title
+- `description` _{string}_ - The channel's description
+
+**Returns**
+
+- A success message
+- An object with channel's details (without password)
+
+**Throws**
+
+- `400` if user is not logged in
+
+#### `DELETE /api/channels/:channelId` - Delete channel with channelId (and associated connections and following objects)
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `404` if channel is not found
+
+#### `PUT /api/channels/:channelId` - Update a channel's information
+
+**Body** _(no need to add fields that are not being changed)_
+
+- `title` _{string}_ - The channel's title
+- `description` _{string}_ - The channel's description
+
+**Returns**
+
+- A success message
+- An object with the updated channel details
+
+**Throws**
+
+- `400` if the user is not logged in
+- `404` if the channel does not exist
+- `403` if the user does not own the channel
+
+## ⭐️ Connections
+
+#### `GET /api/connections` - Get all the connections
+
+**Returns**
+
+- An array of all connections sorted in descending order by date modified
+
+#### `GET /api/connections?author=USERNAME` - Get connections by author
+
+**Returns**
+
+- An array of connections created by user with username `author`
+
+**Throws**
+
+- `400` if `author` is not given
+- `404` if `author` is not a recognized username of any user
+
+#### `GET /api/connections?freetId=freetId` - Get connections for a freet
+
+**Returns**
+
+- An array of connections created for freet with freetId `freetId`
+
+**Throws**
+
+- `400` if `freetId` is not given
+- `404` if `freetId` is not a recognized freetId
+
+#### `GET /api/connections?channelId=channelId` - Get connections for a Channel
+
+**Returns**
+
+- An array of connections created for Channel user with channelId `channelId`
+
+**Throws**
+
+- `400` if `channelId` is not given
+- `404` if `channelId` is not a recognized channelId
+
+#### `POST /api/connections` - Create new connection
+
+**Body**
+
+- `freetId` _{string}_ - The connection's freet
+- `channelId` _{string}_ - The connection's channel
+
+**Returns**
+
+- A success message
+- An object with connection's details
+
+**Throws**
+
+- `400` if user is not logged in
+
+#### `DELETE /api/connections/:connectionId` - Delete connection with connectionId
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `404` if connection is not found
+
+## ⭐️ Follows
+
+#### `GET /api/follows` - Get all the follows
+
+**Returns**
+
+- An array of all follows sorted in descending order by date modified
+
+#### `GET /api/follows?author=USERNAME` - Get follows by author
+
+**Returns**
+
+- An array of follows created by user with username `author`
+
+**Throws**
+
+- `400` if `author` is not given
+- `404` if `author` is not a recognized username of any user
+
+#### `GET /api/follows?channelId=channelId` - Get follows for a given channelId
+
+**Returns**
+
+- An array of follows that are for the channel with `channelId`
+
+**Throws**
+
+- `400` if `channelId` is not given
+- `404` if `channelId` is not a recognized id of any channel
+
+#### `POST /api/follows` - Create new follow
+
+**Body**
+
+- `author` _{string}_ - The user creating the follow
+- `channelId` _{string}_ - The follow's channel
+
+**Returns**
+
+- A success message
+- An object with follow's details
+
+**Throws**
+
+- `400` if user is not logged in
+- `404` if the channelId does not exist
+- `403` if the user tries to follow their own channel
+
+#### `DELETE /api/follows/:followId` - Delete follow with followId
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `404` if follow is not found
+
+## ⭐️ Subscribes
+
+#### `GET /api/subscribes` - Get all the subscribes
+
+**Returns**
+
+- An array of all subscribes sorted in descending order by date modified
+
+#### `GET /api/subscribes?author=USERNAME` - Get subscribes by author
+
+**Returns**
+
+- An array of subscribes created by user with username `author`
+
+**Throws**
+
+- `400` if `author` is not given
+- `404` if `author` is not a recognized username of any user
+
+#### `GET /api/subscribes?subscribingTo=USERNAME` - Get subscribes for a given user
+
+**Returns**
+
+- An array of subscribes that are for the user with `subscribingTo` username
+
+**Throws**
+
+- `400` if `subscribingTo` is not given
+- `404` if `subscribingTo` is not a recognized username of any user
+
+#### `POST /api/subscribes` - Create new subscribe
+
+**Body**
+
+- `author` _{string}_ - The user creating the subscribe
+- `subscribingTo` _{string}_ - The user being subscribed to
+
+**Returns**
+
+- A success message
+- An object with subscribe's details
+
+**Throws**
+
+- `400` if user is not logged in
+- `404` if the author user does not exist
+- `404` if the subscribingTo user does not exist
+- `403` if the user tries to subscribe their own account
+
+#### `DELETE /api/subscribes/:subscribeId` - Delete subscribe with subscribeId
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `404` if subscribe is not found

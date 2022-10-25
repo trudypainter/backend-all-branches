@@ -4,11 +4,11 @@ import FreetCollection from "../freet/collection";
 import UserCollection from "./collection";
 import * as userValidator from "../user/middleware";
 import * as util from "./util";
-import ChannelCollection from "channel/collection";
+import ChannelCollection from "../channel/collection";
 import { Connection } from "mongoose";
-import ConnectionCollection from "connection/collection";
-import SubscribeCollection from "subscribe/collection";
-import FollowCollection from "follow/collection";
+import ConnectionCollection from "../connection/collection";
+import SubscribeCollection from "../subscribe/collection";
+import FollowCollection from "../follow/collection";
 
 const router = express.Router();
 

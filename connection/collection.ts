@@ -147,7 +147,7 @@ class ConnectionCollection {
   /**
    * Delete all the Connections in a given channel
    *
-   * @param {string} channelId - The id of author of Connections
+   * @param {string} channelId - The id of channel having the Connections
    */
   static async deleteForChannel(channelId: string): Promise<boolean> {
     console.log("deleting connections for channel", channelId);
