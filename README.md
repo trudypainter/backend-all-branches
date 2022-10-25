@@ -564,3 +564,5 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `404` if subscribe is not found
+
+[https://backend-all-branches.vercel.app/](https://backend-all-branches.vercel.app/)
